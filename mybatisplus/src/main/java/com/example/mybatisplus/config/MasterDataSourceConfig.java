@@ -11,14 +11,13 @@ import com.example.mybatisplus.interceptor.shard.TableShardInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,65 +30,7 @@ import java.util.List;
 
 @Configuration
 public class MasterDataSourceConfig {
-
     private static final String IMP = "com.example.mybatisplus.handler";
-
-    @Value("${master.datasource.url}")
-    private String url;
-
-    @Value("${master.datasource.username}")
-    private String username;
-
-    @Value("${master.datasource.password}")
-    private String password;
-
-    @Value("${master.datasource.driverClassName}")
-    private String driverClassName;
-
-
-
-
-    @Value("${spring.datasource.initialSize}")
-    private int initialSize;
-
-    @Value("${spring.datasource.minIdle}")
-    private int minIdle;
-
-    @Value("${spring.datasource.maxActive}")
-    private int maxActive;
-
-    @Value("${spring.datasource.maxWait}")
-    private int maxWait;
-
-    @Value("${spring.datasource.timeBetweenEvictionRunsMillis}")
-    private int timeBetweenEvictionRunsMillis;
-
-    @Value("${spring.datasource.minEvictableIdleTimeMillis}")
-    private int minEvictableIdleTimeMillis;
-
-    @Value("${spring.datasource.validationQuery}")
-    private String validationQuery;
-
-    @Value("${spring.datasource.testWhileIdle}")
-    private boolean testWhileIdle;
-
-    @Value("${spring.datasource.testOnBorrow}")
-    private boolean testOnBorrow;
-
-    @Value("${spring.datasource.testOnReturn}")
-    private boolean testOnReturn;
-
-    @Value("${spring.datasource.poolPreparedStatements}")
-    private boolean poolPreparedStatements;
-
-    @Value("${spring.datasource.maxPoolPreparedStatementPerConnectionSize}")
-    private int maxPoolPreparedStatementPerConnectionSize;
-
-    @Value("${spring.datasource.filters}")
-    private String filters;
-
-    @Value("{spring.datasource.connectionProperties}")
-    private String connectionProperties;
 
     /**
      * 全局的配置信息
@@ -109,34 +50,25 @@ public class MasterDataSourceConfig {
     }
 
     @Bean(name = "masterDataSource")
-//    @ConfigurationProperties("spring.datasource")
     @Primary
-    public DataSource masterDataSource() {
+    public DataSource masterDataSource(@Qualifier("dbConfig") Config config) {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl("jdbc:mysql://192.168.2.135:3306/jzgl?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC&useSSL=false");
-        dataSource.setUsername("root");
-        dataSource.setPassword("tdhmaster");
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl(config.getUrl());
+        dataSource.setUsername(config.getUsername());
+        dataSource.setPassword(config.getPassword());
+        dataSource.setDriverClassName(config.getDriverClassName());
 
         //具体配置
-        dataSource.setInitialSize(5);
-        dataSource.setMinIdle(5);
-        dataSource.setMaxActive(20);
-        dataSource.setMaxWait(60000);
-        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
-        dataSource.setMinEvictableIdleTimeMillis(300000);
-        dataSource.setValidationQuery(validationQuery);
-        dataSource.setTestWhileIdle(testWhileIdle);
-        dataSource.setTestOnBorrow(testOnBorrow);
-        dataSource.setTestOnReturn(testOnReturn);
-        dataSource.setPoolPreparedStatements(poolPreparedStatements);
-        dataSource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
-        try {
-            dataSource.setFilters(filters);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        dataSource.setConnectionProperties(connectionProperties);
+        dataSource.setInitialSize(config.getInitialSize());
+        dataSource.setMinIdle(config.getMinIdle());
+        dataSource.setMaxActive(config.getMaxActive());
+        dataSource.setMaxWait(config.getMaxWait());
+        dataSource.setTimeBetweenEvictionRunsMillis(config.getTimeBetweenEvictionRunsMillis());
+        dataSource.setMinEvictableIdleTimeMillis(config.getMinEvictableIdleTimeMillis());
+        dataSource.setValidationQuery(config.getValidationQuery());
+        dataSource.setTestWhileIdle(config.isTestWhileIdle());
+        dataSource.setTestOnBorrow(config.isTestOnBorrow());
+        dataSource.setTestOnReturn(config.isTestOnReturn());
         return dataSource;
     }
 
@@ -192,7 +124,16 @@ public class MasterDataSourceConfig {
      */
     @Bean(name = "masterTransactionManager")
     @Primary
-    public DataSourceTransactionManager masterTransactionManager() {
-        return new DataSourceTransactionManager(masterDataSource());
+    public DataSourceTransactionManager masterTransactionManager(@Qualifier("masterDataSource") DataSource masterDataSource) {
+        return new DataSourceTransactionManager(masterDataSource);
+    }
+
+    /**
+     * jdbcTemplate
+     * @return
+     */
+    @Bean(name = "masterJdbcTemplate")
+    public JdbcTemplate masterJdbcTemplate(@Qualifier("masterDataSource") DataSource masterDataSource) {
+        return new JdbcTemplate(masterDataSource);
     }
 }

@@ -9,9 +9,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Description:缓存JAVA反射信息，以提高效率
@@ -32,29 +32,29 @@ public class ReflectionCacheUtil {
     /**
      * 缓存参数对象
      */
-    private static final Map<String, Parameter[]> MAP_PARAMETER = new HashMap<>();
+    private static final Map<String, Parameter[]> MAP_PARAMETER = new ConcurrentHashMap<>();
 
     /**
      * 缓存类对象
      */
-    private static final Map<String, Class<?>> MAP_CLASS = new HashMap<>();
+    private static final Map<String, Class<?>> MAP_CLASS = new ConcurrentHashMap<>();
 
     /**
      * 缓存方法对象
      */
-    private static final Map<String, Method> MAP_METHOD = new HashMap<>();
+    private static final Map<String, Method> MAP_METHOD = new ConcurrentHashMap<>();
 
 
     /**
      * 缓存类实例对象
      */
-    private static final Map<Class<?>, Object> MAP_INSTANCE = new HashMap<>();
+    private static final Map<Class<?>, Object> MAP_INSTANCE = new ConcurrentHashMap<>();
 
 
     /**
      * 缓存父类及当前类的所有方法对象
      */
-    private static final Map<Class<?>, List<Field>> MAP_FIELD = new HashMap<>();
+    private static final Map<Class<?>, List<Field>> MAP_FIELD = new ConcurrentHashMap<>();
 
     /**
      * 获取指定类指定方法的参数

@@ -1,4 +1,4 @@
-package com.example.mybatisplus.annotation;
+package com.example.mybatisplus.shard;
 
 import com.example.mybatisplus.interceptor.shard.IShardStrategy;
 

@@ -1,6 +1,7 @@
 package com.example.mybatisplus.service;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.entity.EajJzEntity;
 
@@ -13,5 +14,5 @@ import com.example.mybatisplus.entity.EajJzEntity;
  * @since 2019-11-26
  */
 public interface IEajJzService extends IService<EajJzEntity> {
-
+    void test(JSONObject jo, EajJzEntity eajJzEntity);
 }

@@ -1,7 +1,7 @@
 package com.example.mybatisplus.interceptor.shard;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
-import com.example.mybatisplus.annotation.TableShard;
+import com.example.mybatisplus.shard.TableShard;
 import com.example.mybatisplus.utils.ReflectionCacheUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;

@@ -8,6 +8,7 @@ import com.example.mybatisplus.mapper.EajJzMapper;
 import com.example.mybatisplus.service.IEajJzService;
 import com.example.mybatisplus.shard.AutowiredShardData;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,5 +24,7 @@ import org.springframework.stereotype.Service;
 public class EajJzServiceImpl extends ServiceImpl<EajJzMapper, EajJzEntity> implements IEajJzService {
     @Override
     public void test(JSONObject jo, @AutowiredShardData EajJzEntity eajJzEntity) {
+        byte[] obj = SerializationUtils.serialize(eajJzEntity);
+        EajJzEntity eajJzEntity1 = SerializationUtils.deserialize(obj);
     }
 }

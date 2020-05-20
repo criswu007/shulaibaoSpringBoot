@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.example.mybatisplus.interceptor.shard.TableShardInterceptor;
+import com.example.mybatisplus.mybatisplus.interceptor.shard.TableShardInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +30,7 @@ import java.util.List;
 
 @Configuration
 public class MasterDataSourceConfig {
-    private static final String IMP = "com.example.mybatisplus.handler";
+    private static final String IMP = "com.example.mybatisplus.mybatisplus.handler";
 
     /**
      * 全局的配置信息
@@ -100,7 +100,7 @@ public class MasterDataSourceConfig {
         sqlSessionFactoryBean.setPlugins(interceptors.toArray(new Interceptor[interceptors.size()]));
 
         //注册EnumTypeHandler
-//        sqlSessionFactoryBean.setTypeHandlersPackage(IMP);
+        sqlSessionFactoryBean.setTypeHandlersPackage(IMP);
         return sqlSessionFactoryBean;
     }
 

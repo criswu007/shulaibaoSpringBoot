@@ -1,6 +1,6 @@
 package com.example.mybatisplus.shard;
 
-import com.example.mybatisplus.interceptor.shard.IShardStrategy;
+import com.example.mybatisplus.mybatisplus.interceptor.shard.IShardStrategy;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

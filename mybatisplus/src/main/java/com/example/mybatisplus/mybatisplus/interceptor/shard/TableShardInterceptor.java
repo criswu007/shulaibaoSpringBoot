@@ -1,4 +1,4 @@
-package com.example.mybatisplus.interceptor.shard;
+package com.example.mybatisplus.mybatisplus.interceptor.shard;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.example.mybatisplus.shard.TableShard;

@@ -1,4 +1,4 @@
-package com.example.mybatisplus.interceptor.shard;
+package com.example.mybatisplus.mybatisplus.interceptor.shard;
 
 /**
  * 分表逻辑接口

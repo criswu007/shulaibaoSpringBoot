@@ -75,22 +75,24 @@
     <logger name="org.springframework.boot" level="ERROR">
         <appender-ref ref="jzgl-bp-log"/>
     </logger>
+    <logger name="org.springframework" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
 
-    <!--   <logger name="org.apache.ibatis.logging.jdbc" level="DEBUG">
-           <appender-ref ref="jzgl-sql-log" />
-       </logger>-->
+
     <!--DAO 层SQL 打印-->
-    <!--<logger name="com.example.mybatisplus.dao" level="DEBUG">-->
-        <!--<appender-ref ref="jzgl-sql-log"/>-->
-    <!--</logger>-->
+    <logger name="com.example.mybatisplus.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="jzgl-sql-log"/>
+    </logger>
     <!--缓存SQL 打印-->
-    <!--<logger name="com.example.mybatisplus.tcache" level="DEBUG">-->
-        <!--<appender-ref ref="jzgl-sql-log"/>-->
-    <!--</logger>-->
+    <logger name="com.example.mybatisplus.tcache" level="INFO" additivity="false">
+        <appender-ref ref="jzgl-sql-log"/>
+    </logger>
     <!--切面日志 打印-->
-    <!--<logger name="com.example.mybatisplus.aop.JzglAspect" level="info">-->
-        <!--<appender-ref ref="jzgl-bp-log"/>-->
-    <!--</logger>-->
+    <logger name="com.example.mybatisplus.aop.JzglAspect" level="INFO" additivity="false">
+        <appender-ref ref="jzgl-bp-log"/>
+    </logger>
     <!-- 控制台输出日志级别 -->
     <root level="info">
         <appender-ref ref="STDOUT"/>

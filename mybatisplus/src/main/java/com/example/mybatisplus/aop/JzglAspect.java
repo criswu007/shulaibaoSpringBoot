@@ -20,13 +20,13 @@ import java.lang.reflect.Parameter;
  * ------------------------------------------------------------------
  * 2020-1-19 11:22  use      1.0        1.0 Version
  */
-@Aspect
+@Aspect //切面，独立模块
 @Component
 @Slf4j
 public class JzglAspect {
 
-    @Before("com.example.mybatisplus.aop.PointCuts.valid()")
-    public void doValid(JoinPoint joinPoint) {
+    @Before("com.example.mybatisplus.aop.PointCuts.valid()")    //Advice通知 Before、AfterReturning、AfterThrowing、After、Around
+    public void doValid(JoinPoint joinPoint) {                  //JoinPoint 连接点 封装了原方法调用的相关信息，如参数、原对象信息，以及直接调用原方法的proceed方法
         Object[] args = joinPoint.getArgs();
         log.info("args:{}", args);
 

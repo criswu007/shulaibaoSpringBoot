@@ -15,4 +15,12 @@ import com.example.mybatisplus.entity.EajJzEntity;
  */
 public interface IEajJzService extends IService<EajJzEntity> {
     void test(JSONObject jo, EajJzEntity eajJzEntity);
+
+    void test1();
+
+    void test2();
+
+    void test3();
+
+    void test4();
 }

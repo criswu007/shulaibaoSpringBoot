@@ -1,4 +1,4 @@
-package com.example.mybatisplus.interceptor.shard;
+package com.example.mybatisplus.mybatisplus.interceptor.shard;
 
 import com.example.mybatisplus.context.TableShardContext;
 import lombok.extern.slf4j.Slf4j;

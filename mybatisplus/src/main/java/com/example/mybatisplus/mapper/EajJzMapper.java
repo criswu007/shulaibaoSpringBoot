@@ -4,7 +4,7 @@ package com.example.mybatisplus.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.mybatisplus.shard.TableShard;
 import com.example.mybatisplus.entity.EajJzEntity;
-import com.example.mybatisplus.interceptor.shard.AjbsShardStrategy;
+import com.example.mybatisplus.mybatisplus.interceptor.shard.AjbsShardStrategy;
 
 /**
  * 卷宗表mapper

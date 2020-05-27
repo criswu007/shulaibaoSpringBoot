@@ -1,16 +1,23 @@
 package com.example.mybatisplus.http;
 
+
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -332,5 +339,96 @@ public class HttpClientUtils {
         }
     }
 
+//    public static void formData(String url) {
+//        // 创建httpClient对象
+//        CloseableHttpClient httpClient = HttpClients.createDefault();
+//
+//        // 创建http对象
+//        HttpPost httpPost = new HttpPost(url);
+//        /**
+//         * setConnectTimeout：设置连接超时时间，单位毫秒。
+//         * setConnectionRequestTimeout：设置从connect Manager(连接池)获取Connection
+//         * 超时时间，单位毫秒。这个属性是新加的属性，因为目前版本是可以共享连接池的。
+//         * setSocketTimeout：请求获取数据的超时时间(即响应时间)，单位毫秒。 如果访问一个接口，多少时间内无法返回数据，就直接放弃此次调用。
+//         */
+//        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
+//        httpPost.setConfig(requestConfig);
+//        // 设置请求头
+//		/*httpPost.setHeader("Cookie", "");
+//		httpPost.setHeader("Connection", "keep-alive");
+//		httpPost.setHeader("Accept", "application/json");
+//		httpPost.setHeader("Accept-Language", "zh-CN,zh;q=0.9");
+//		httpPost.setHeader("Accept-Encoding", "gzip, deflate, br");
+//		httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36");*/
+//		String path = "";
+//        FileEntity fileEntity = new FileEntity(new File(path));
+//        fileEntity.
+//        httpPost.setEntity();
+//        packageHeader(headers, httpPost);
+//
+//        // 封装请求参数
+//        packageParam(params, httpPost);
+//
+//        // 创建httpResponse对象
+//        CloseableHttpResponse httpResponse = null;
+//
+//        try {
+//            // 执行请求并获得响应结果
+//            return getHttpClientResult(httpResponse, httpClient, httpPost);
+//        } finally {
+//            // 释放资源
+//            release(httpResponse, httpClient);
+//        }
+//    }
+
+    public static void main(String[] args) {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        try {
+            String uri = "http://127.0.0.1:8080/encoding/servlet/RevFileServlet";
+            uri = "http://127.0.0.1:8080/revFile";
+            HttpPost httppost = new HttpPost(uri);
+
+            String path = "C:/Users/Administrator/Desktop/study/微服务/netflix/eureka.png";
+            File file = new File(path);
+            FileBody bin = new FileBody(file);
+            StringBody comment = new StringBody("A binary file of some kind", ContentType.TEXT_PLAIN);
+
+            HttpEntity reqEntity = MultipartEntityBuilder.create()
+                    .addPart("bin", bin)
+                    .addPart("comment", comment)
+                    .build();
+
+
+            httppost.setEntity(reqEntity);
+
+            System.out.println("executing request " + httppost.getRequestLine());
+            CloseableHttpResponse response = httpclient.execute(httppost);
+            try {
+                System.out.println("----------------------------------------");
+                System.out.println(response.getStatusLine());
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    System.out.println("Response content length: " + resEntity.getContentLength());
+                }
+                EntityUtils.consume(resEntity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    response.close();
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+        } catch (Exception e3) {
+            e3.printStackTrace();
+        } finally {
+            try {
+                httpclient.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 

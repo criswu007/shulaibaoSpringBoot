@@ -17,6 +17,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -384,18 +385,18 @@ public class HttpClientUtils {
     public static void main(String[] args) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
-            String uri = "http://127.0.0.1:8080/encoding/servlet/RevFileServlet";
-            uri = "http://127.0.0.1:8080/revFile";
+            String uri = "http://127.0.0.1:8080/jzxtjkpt/api/yyzx/tempBl/uploadTempFile.do";
             HttpPost httppost = new HttpPost(uri);
 
-            String path = "C:/Users/Administrator/Desktop/study/微服务/netflix/eureka.png";
+            String path = "C:\\Users\\use\\Desktop\\Aspose.pdf";
             File file = new File(path);
             FileBody bin = new FileBody(file);
             StringBody comment = new StringBody("A binary file of some kind", ContentType.TEXT_PLAIN);
 
             HttpEntity reqEntity = MultipartEntityBuilder.create()
-                    .addPart("bin", bin)
-                    .addPart("comment", comment)
+                    .addPart("file", bin)
+                    .addPart("ahdm", comment)
+                    .addPart("date", new StringBody("123", ContentType.TEXT_PLAIN))
                     .build();
 
 

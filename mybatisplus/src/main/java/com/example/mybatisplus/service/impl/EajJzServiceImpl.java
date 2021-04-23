@@ -2,6 +2,7 @@ package com.example.mybatisplus.service.impl;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.example.mybatisplus.context.EventPublisher;
@@ -11,6 +12,7 @@ import com.example.mybatisplus.entity.EajDqxEntity;
 import com.example.mybatisplus.entity.EajJzEntity;
 import com.example.mybatisplus.mapper.EajDqxMapper;
 import com.example.mybatisplus.mapper.EajJzMapper;
+import com.example.mybatisplus.service.EajDqxService;
 import com.example.mybatisplus.service.IEajJzService;
 import com.example.mybatisplus.shard.AutowiredShardData;
 import com.example.mybatisplus.utils.ConnectionUtils;
@@ -20,11 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * <p>
@@ -50,17 +54,22 @@ public class EajJzServiceImpl extends ServiceImpl<EajJzMapper, EajJzEntity> impl
     @Autowired
     private JdbcTemplate masterJdbcTemplate;
 
-    @PostConstruct
-    public void testPostConstruct() {
-        System.out.println("---------------------------");
+    @Autowired
+    private EajDqxService eajDqxService;
+
+    static {
+        System.out.println("-------------static---------------");
     }
 
     public EajJzServiceImpl() {
         System.out.println("------------------construct");
     }
 
-    static {
-        System.out.println("-------------static---------------");
+    //该注解的方法在整个Bean初始化中的执行顺序：
+    //Constructor(构造方法) -> @Autowired(依赖注入) -> @PostConstruct(注释的方法)
+    @PostConstruct
+    public void testPostConstruct() {
+        System.out.println("---------------------------");
     }
 
     @Override
@@ -172,5 +181,23 @@ public class EajJzServiceImpl extends ServiceImpl<EajJzMapper, EajJzEntity> impl
         EajJzEntity eajJzEntity = new EajJzEntity();
         eajJzEntity.setAhdm("0009909090");
         eajJzMapper.insert(eajJzEntity);
+    }
+
+    /**
+     * 测试数据库的事务隔离级别
+     */
+    @Transactional(value = "masterTransactionManager")
+    @Override
+    public void test6() {
+        List<EajDqxEntity> list = eajDqxMapper.selectList(new QueryWrapper<EajDqxEntity>());
+        if (CollectionUtils.isEmpty(list)) {
+            eajDqxService.insertEajDqx();
+        } else {
+            eajDqxMapper.delete(new QueryWrapper<EajDqxEntity>());
+        }
+        list = eajDqxMapper.selectList(new QueryWrapper<EajDqxEntity>());
+        list.stream().forEach(item->{
+            log.info(item.toString());
+        });
     }
 }

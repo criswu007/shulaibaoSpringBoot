@@ -41,6 +41,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
         <!--spring Boot模块结束-->
 
         <!--数据库模块开始-->
@@ -125,11 +130,24 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
+        <dependency>
+            <artifactId>commons-beanutils</artifactId>
+            <groupId>commons-beanutils</groupId>
+            <version>1.9.3</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!--swagger升级版-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>2.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.0</version>
         </dependency>
 
     </dependencies>

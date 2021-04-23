@@ -81,7 +81,7 @@
 
 
     <!--DAO 层SQL 打印-->
-    <logger name="com.example.mybatisplus.dao" level="DEBUG" additivity="false">
+    <logger name="com.example.mybatisplus.mapper" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="jzgl-sql-log"/>
     </logger>

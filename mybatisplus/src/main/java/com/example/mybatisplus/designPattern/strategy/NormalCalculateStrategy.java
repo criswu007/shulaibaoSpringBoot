@@ -1,8 +1,10 @@
 package com.example.mybatisplus.designPattern.strategy;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("normal")
+@Primary
 public class NormalCalculateStrategy implements CalculateStrategy {
     @Override
     public String getUserType() {
@@ -11,6 +13,6 @@ public class NormalCalculateStrategy implements CalculateStrategy {
 
     @Override
     public Double calculatePrice(Double fee) {
-        return null;
+        return fee;
     }
 }

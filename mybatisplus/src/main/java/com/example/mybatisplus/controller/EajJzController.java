@@ -217,4 +217,10 @@ public class EajJzController {
             file.createNewFile();
         }
     }
+
+    @GetMapping("/test6.do")
+    public void test6() {
+        eajJzService.test6();
+    }
+
 }

@@ -1,15 +1,16 @@
 package com.example.mybatisplus.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.sql.Blob;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * <p>
@@ -22,7 +23,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("EAJ_JZ_0")
+@TableName("EAJ_JZ_")
+@FieldNameConstants
 public class EajJzEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +51,7 @@ public class EajJzEntity implements Serializable {
     private String bz;
 
     @TableField("ZZSJ")
-    private LocalDateTime zzsj;
+    private Date zzsj;
 
     @TableField("ZZR")
     private String zzr;
@@ -61,7 +63,7 @@ public class EajJzEntity implements Serializable {
     private String tjr;
 
     @TableField("TJRQ")
-    private LocalDateTime tjrq;
+    private Date tjrq;
 
     @TableField("ZFJBS")
     private String zfjbs;
@@ -100,7 +102,7 @@ public class EajJzEntity implements Serializable {
     private String slh;
 
     @TableField("LASTUPDATE")
-    private LocalDateTime lastupdate;
+    private Date lastupdate;
 
     @TableField("SENDID")
     private Integer sendid;
@@ -181,7 +183,7 @@ public class EajJzEntity implements Serializable {
     private String fjm;
 
     @TableField("TSTAMP")
-    private LocalDateTime tstamp;
+    private Date tstamp;
 
     @TableField("YYXHS")
     private String yyxhs;

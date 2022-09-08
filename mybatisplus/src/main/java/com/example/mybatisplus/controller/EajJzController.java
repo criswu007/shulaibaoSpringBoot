@@ -2,6 +2,8 @@ package com.example.mybatisplus.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.mybatisplus.entity.EajJzEntity;
+import com.example.mybatisplus.pojo.eo.ResultEO;
 import com.example.mybatisplus.pojo.vo.MultipartFileVO;
 import com.example.mybatisplus.service.IEajJzService;
 import com.example.mybatisplus.utils.ConcurrentUtils;
@@ -61,6 +63,13 @@ public class EajJzController {
     @ApiOperation(value = "测试多线程接口")
     @PostMapping("test.do")
     public void Test(@RequestBody JSONObject jo) throws Exception {
+        EajJzEntity eajJzEntity = new EajJzEntity();
+        eajJzEntity.setAhdm("0000111111");
+        eajJzEntity.setLastupdate(new Date());
+        eajJzEntity.setJmxh(111);
+        eajJzEntity.setNr("文本内容123".getBytes());
+        eajJzService.test(jo, eajJzEntity);
+
 //        synchronized (this) {
 //            Thread.sleep(10000);
 //        }
@@ -72,37 +81,37 @@ public class EajJzController {
 //        ArrayList<Callable> tasks = new ArrayList<Callable>();
 
 
-        Integer taskSize = 10000;
-
-        CountDownLatch countDownLatch = new CountDownLatch(taskSize);
-
-        StopWatch stopWatch = new StopWatch("test");
-        stopWatch.start();
-
-        ConcurrentUtils.getInstance();
-
-        for (int i=0; i<taskSize; i++) {
-            ConcurrentUtils.submitRunTask(() -> {
-//                atomicCount.addAndGet(1);
-//                synchronized (this) {
-                    count++;
-//                    try {
-//                        Thread.sleep(2000);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                calculateCount();
-                countDownLatch.countDown();
-            });
-        }
-
-        countDownLatch.await();
-
-        System.out.println("count:" + count);
-        System.out.println("atomicCount:" + atomicCount);
-        stopWatch.stop();
-        System.out.println(stopWatch.prettyPrint());
+//        Integer taskSize = 10000;
+//
+//        CountDownLatch countDownLatch = new CountDownLatch(taskSize);
+//
+//        StopWatch stopWatch = new StopWatch("test");
+//        stopWatch.start();
+//
+//        ConcurrentUtils.getInstance();
+//
+//        for (int i=0; i<taskSize; i++) {
+//            ConcurrentUtils.submitRunTask(() -> {
+////                atomicCount.addAndGet(1);
+////                synchronized (this) {
+//                    count++;
+////                    try {
+////                        Thread.sleep(2000);
+////                    } catch (Exception e) {
+////                        e.printStackTrace();
+////                    }
+////                }
+////                calculateCount();
+//                countDownLatch.countDown();
+//            });
+//        }
+//
+//        countDownLatch.await();
+//
+//        System.out.println("count:" + count);
+//        System.out.println("atomicCount:" + atomicCount);
+//        stopWatch.stop();
+//        System.out.println(stopWatch.prettyPrint());
     }
 
     public synchronized void calculateCount() {
@@ -125,13 +134,18 @@ public class EajJzController {
         eajJzService.test3();
     }
 
+    @PostMapping("test4.do")
+    public void Test4() {
+        eajJzService.test4();
+    }
+
     /**
      * 文件上传demo
      * @param file
      * @param name
      * @throws Exception
      */
-    @RequestMapping("/test4.do")
+//    @RequestMapping("/test4.do")
 //    public void Test4(List<MultipartFile> fileList, @RequestParam(value = "name") String name, HttpServletRequest request) {
     public void Test4(@RequestBody MultipartFileVO multipartFileVO, HttpServletRequest request) {
         String contentType = request.getHeader("Content-Type");
@@ -153,6 +167,11 @@ public class EajJzController {
 //                e.printStackTrace();
 //            }
 //        });
+    }
+
+    @PostMapping("test5.do")
+    public void Test5() {
+        eajJzService.test5();
     }
 
     /**
@@ -203,24 +222,29 @@ public class EajJzController {
 //        return ResponseEntity.ok().build();
 
     }
-
-    @GetMapping("/test5.do")
-    public void test5() throws Exception {
-        String path = this.getClass().getResource("/").getPath() + "../temp/" + UUID.randomUUID() + ".txt";
-//        String path = fileDir + "/" + UUID.randomUUID() + ".txt";
-        System.out.println(path);
-        File file = new File(path);
-        if (!file.exists()) {
-            if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
-            file.createNewFile();
-        }
-    }
+//
+//    @GetMapping("/test5.do")
+//    public void test5() throws Exception {
+//        String path = this.getClass().getResource("/").getPath() + "../temp/" + UUID.randomUUID() + ".txt";
+////        String path = fileDir + "/" + UUID.randomUUID() + ".txt";
+//        System.out.println(path);
+//        File file = new File(path);
+//        if (!file.exists()) {
+//            if (!file.getParentFile().exists()) {
+//                file.getParentFile().mkdirs();
+//            }
+//            file.createNewFile();
+//        }
+//    }
 
     @GetMapping("/test6.do")
-    public void test6() {
-        eajJzService.test6();
+    public ResultEO test6() {
+        return eajJzService.test6();
+    }
+
+    @GetMapping("/test7.do")
+    public void test7() {
+        eajJzService.test7();
     }
 
 }

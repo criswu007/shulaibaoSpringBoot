@@ -12,6 +12,14 @@ public class ResultEO extends Result {
         return result;
     }
 
+    public static ResultEO success(Object data) {
+        ResultEO result = new ResultEO();
+        result.setCode(Status.SUCCESS.getCode());
+        result.setMsg(Status.SUCCESS.getDetail());
+        result.setData(data);
+        return result;
+    }
+
 
     public static ResultEO success(String message, int responseCode) {
         ResultEO result = ResultEO.success();

@@ -1,5 +1,6 @@
 package com.example.mybatisplus.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldNameConstants;
+import org.apache.ibatis.type.ByteArrayTypeHandler;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -23,7 +25,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("EAJ_JZ_")
+@TableName(value = "EAJ_JZ_", autoResultMap = true)
 @FieldNameConstants
 public class EajJzEntity implements Serializable {
 
@@ -86,7 +88,7 @@ public class EajJzEntity implements Serializable {
     @TableField("WJDX")
     private Integer wjdx;
 
-    @TableField("NR")
+    @TableField(value = "NR", typeHandler = ByteArrayTypeHandler.class)
     private byte[] nr;
 
     @TableField("YSBZ")
@@ -102,6 +104,7 @@ public class EajJzEntity implements Serializable {
     private String slh;
 
     @TableField("LASTUPDATE")
+    @JSONField(format = "yyyyMMdd HH:mm:ss")
     private Date lastupdate;
 
     @TableField("SENDID")

@@ -1,21 +1,30 @@
 package com.example.mybatisplus.service.impl;
 
 
+import cn.hutool.core.convert.impl.UUIDConverter;
+import cn.hutool.core.lang.UUID;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.example.mybatisplus.context.EventPublisher;
 import com.example.mybatisplus.context.SpringContext;
+import com.example.mybatisplus.context.TableShardContext;
 import com.example.mybatisplus.context.event.TestEvent;
+import com.example.mybatisplus.entity.EajCsEntity;
 import com.example.mybatisplus.entity.EajDqxEntity;
 import com.example.mybatisplus.entity.EajJzEntity;
+import com.example.mybatisplus.mapper.EajCsMapper;
 import com.example.mybatisplus.mapper.EajDqxMapper;
 import com.example.mybatisplus.mapper.EajJzMapper;
+import com.example.mybatisplus.pojo.eo.ResultEO;
 import com.example.mybatisplus.service.EajDqxService;
 import com.example.mybatisplus.service.IEajJzService;
+import com.example.mybatisplus.service.IQxSmxxService;
 import com.example.mybatisplus.shard.AutowiredShardData;
 import com.example.mybatisplus.utils.ConnectionUtils;
+import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +32,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.sqlite.jdbc3.JDBC3ResultSet;
+import org.sqlite.jdbc4.JDBC4ResultSet;
+import sun.net.util.IPAddressUtil;
 
 import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  * <p>
@@ -52,10 +67,16 @@ public class EajJzServiceImpl extends ServiceImpl<EajJzMapper, EajJzEntity> impl
     private EajDqxMapper eajDqxMapper;
 
     @Autowired
+    private EajCsMapper eajCsMapper;
+
+    @Autowired
     private JdbcTemplate masterJdbcTemplate;
 
     @Autowired
     private EajDqxService eajDqxService;
+
+    @Autowired
+    private IQxSmxxService qxSmxxService;
 
     static {
         System.out.println("-------------static---------------");
@@ -76,6 +97,10 @@ public class EajJzServiceImpl extends ServiceImpl<EajJzMapper, EajJzEntity> impl
     public void test(JSONObject jo, @AutowiredShardData EajJzEntity eajJzEntity) {
         byte[] obj = SerializationUtils.serialize(eajJzEntity);
         EajJzEntity eajJzEntity1 = SerializationUtils.deserialize(obj);
+        String str = JSON.toJSONString(eajJzEntity);
+        log.info(str);
+        EajJzEntity eajJzEntity2 = JSON.parseObject(str, EajJzEntity.class);
+        log.info(eajJzEntity2.getNr().toString());
     }
 
     @Override
@@ -169,18 +194,28 @@ public class EajJzServiceImpl extends ServiceImpl<EajJzMapper, EajJzEntity> impl
     @Transactional(value = "masterTransactionManager")
     @Override
     public void test4() {
-        EajDqxEntity eajDqxEntity = new EajDqxEntity();
-        eajDqxEntity.setFydm("999999");
-        eajDqxEntity.setAhdm("123");
-        eajDqxMapper.insert(eajDqxEntity);
-        test5();
+        int i=100;
+        while (i > 0) {
+            EajCsEntity eajCsEntity = new EajCsEntity();
+            eajCsEntity.setFydm("999999");
+            eajCsEntity.setAhdm(UUID.randomUUID().toString(true));
+            eajCsMapper.insert(eajCsEntity);
+
+//            EajDqxEntity eajDqxEntity = new EajDqxEntity();
+//            eajDqxEntity.setAhdm(UUID.randomUUID().toString(true));
+//            eajDqxMapper.insert(eajDqxEntity);
+            i--;
+        }
     }
 
     @Transactional(value = "masterTransactionManager")
     public void test5() {
-        EajJzEntity eajJzEntity = new EajJzEntity();
-        eajJzEntity.setAhdm("0009909090");
-        eajJzMapper.insert(eajJzEntity);
+        EajDqxEntity eajDqxEntity = new EajDqxEntity();
+        eajDqxEntity.setAhdm(UUID.randomUUID().toString(true));
+        eajDqxEntity.setFydm("330300");
+        eajDqxMapper.insert(eajDqxEntity);
+
+        qxSmxxService.insert();
     }
 
     /**
@@ -188,16 +223,57 @@ public class EajJzServiceImpl extends ServiceImpl<EajJzMapper, EajJzEntity> impl
      */
     @Transactional(value = "masterTransactionManager")
     @Override
-    public void test6() {
-        List<EajDqxEntity> list = eajDqxMapper.selectList(new QueryWrapper<EajDqxEntity>());
-        if (CollectionUtils.isEmpty(list)) {
-            eajDqxService.insertEajDqx();
+    public ResultEO test6() {
+//        List<EajDqxEntity> list = eajDqxMapper.selectList(new QueryWrapper<EajDqxEntity>());
+//        if (CollectionUtils.isEmpty(list)) {
+//            eajDqxService.insertEajDqx();
+//        } else {
+//            eajDqxMapper.delete(new QueryWrapper<EajDqxEntity>());
+//        }
+//        list = eajDqxMapper.selectList(new QueryWrapper<EajDqxEntity>());
+
+        TableShardContext.setShardData("132720190109000030");
+        List<EajJzEntity> list = eajJzMapper.selectList(new QueryWrapper<EajJzEntity>().eq(EajJzEntity.Fields.ahdm.toUpperCase(), "132720190109000030"));
+//        list.stream().forEach(item->{
+//            log.info(item.toString());
+//        });
+        return ResultEO.success(list);
+    }
+
+    private Map<String, RateLimiter> rateLimiterMap = new ConcurrentHashMap<>();
+
+    @Override
+    public void test7() {
+        String key = "2.103";
+        RateLimiter rateLimiter;
+        if (rateLimiterMap.containsKey(key)) {
+            rateLimiter = rateLimiterMap.get(key);
         } else {
-            eajDqxMapper.delete(new QueryWrapper<EajDqxEntity>());
+            rateLimiter = RateLimiter.create(5);
+            rateLimiterMap.put(key, rateLimiter);
         }
-        list = eajDqxMapper.selectList(new QueryWrapper<EajDqxEntity>());
-        list.stream().forEach(item->{
-            log.info(item.toString());
-        });
+        log.info("rate:{}", rateLimiter.getRate());
+
+        int index = 5;
+        while (index>0) {
+            boolean b = rateLimiter.tryAcquire();
+            log.info("tryAcquire:{}", b);
+            if (b) {
+                log.info("rate:{}", rateLimiter.getRate());
+                rateLimiter.acquire();
+                log.info("rate:{}", rateLimiter.getRate());
+            }
+            index--;
+        }
+        log.info("rate:{}", rateLimiter.getRate());
+        try {
+            Thread.sleep(1000);
+            log.info("rate:{}", rateLimiter.getRate());
+
+            Thread.sleep(1000);
+            log.info("rate:{}", rateLimiter.getRate());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 }

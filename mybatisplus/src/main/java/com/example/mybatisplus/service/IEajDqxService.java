@@ -12,6 +12,6 @@ import com.example.mybatisplus.entity.EajDqxEntity;
  * @author wudb
  * @since 2019-11-22
  */
-public interface IEajDqxService extends IService<EajDqxEntity> {
+public interface IEajDqxService {
 
 }

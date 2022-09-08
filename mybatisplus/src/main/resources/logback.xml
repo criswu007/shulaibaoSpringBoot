@@ -75,9 +75,9 @@
     <logger name="org.springframework.boot" level="ERROR">
         <appender-ref ref="jzgl-bp-log"/>
     </logger>
-    <logger name="org.springframework" level="ERROR">
-        <appender-ref ref="STDOUT"/>
-    </logger>
+<!--    <logger name="org.springframework" level="ERROR" additivity="false">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </logger>-->
 
 
     <!--DAO 层SQL 打印-->

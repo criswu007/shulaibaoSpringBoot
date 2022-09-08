@@ -59,4 +59,8 @@ public class ConcurrentUtils {
     public static <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws Exception{
         return pool.invokeAll(tasks);
     }
+
+    public static <T> List<Future<T>> invokeAllCall(Collection<Callable<T>> tasks) throws Exception{
+        return pool.invokeAll(tasks);
+    }
 }

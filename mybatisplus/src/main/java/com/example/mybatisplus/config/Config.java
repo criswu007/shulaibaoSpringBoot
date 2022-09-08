@@ -30,6 +30,18 @@ public class Config {
     @Value("${master.datasource.driverClassName}")
     private String driverClassName;
 
+    @Value("${cluster.datasource.url}")
+    private String clusterUrl;
+
+    @Value("${cluster.datasource.username}")
+    private String clusterUsername;
+
+    @Value("${cluster.datasource.password}")
+    private String clusterPassword;
+
+    @Value("${cluster.datasource.driverClassName}")
+    private String clusterDriverClassName;
+
     @Value("${spring.datasource.initialSize}")
     private int initialSize;
 
@@ -48,7 +60,7 @@ public class Config {
     @Value("${spring.datasource.minEvictableIdleTimeMillis}")
     private int minEvictableIdleTimeMillis;
 
-    @Value("${spring.datasource.validationQuery}")
+//    @Value("${spring.datasource.validationQuery}")
     private String validationQuery;
 
     @Value("${spring.datasource.testWhileIdle}")
@@ -61,26 +73,6 @@ public class Config {
     private boolean testOnReturn;
 
     public Config() {
-    }
-
-    @Override
-    public String toString() {
-        return "Config{" +
-                "url='" + url + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", driverClassName='" + driverClassName + '\'' +
-                ", initialSize=" + initialSize +
-                ", minIdle=" + minIdle +
-                ", maxActive=" + maxActive +
-                ", maxWait=" + maxWait +
-                ", timeBetweenEvictionRunsMillis=" + timeBetweenEvictionRunsMillis +
-                ", minEvictableIdleTimeMillis=" + minEvictableIdleTimeMillis +
-                ", validationQuery='" + validationQuery + '\'' +
-                ", testWhileIdle=" + testWhileIdle +
-                ", testOnBorrow=" + testOnBorrow +
-                ", testOnReturn=" + testOnReturn +
-                '}';
     }
 
     @Bean(value = "dbConfig")

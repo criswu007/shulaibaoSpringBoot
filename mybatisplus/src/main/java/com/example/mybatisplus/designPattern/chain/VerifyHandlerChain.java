@@ -15,9 +15,16 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 public class VerifyHandlerChain implements InitializingBean {
+
+    /**
+     * 第一种实现，使用自动注入，map收集所有的验证类，key:bean.name，value:bean，应用于策略设计模式，传入key调用不同实现类
+     */
     @Autowired
     private Map<String, VerifyHandler> verifyHandlerMapInit = new ConcurrentHashMap<>();
 
+    /**
+     * 第二种实现，使用自动注入，加@Order注解，基于顺序实现list收集所有的验证类
+     */
     @Autowired
     private List<VerifyHandler> verifyHandlerListInit = new ArrayList<>();
 
@@ -26,6 +33,10 @@ public class VerifyHandlerChain implements InitializingBean {
     @Autowired
     private ApplicationContext applicationContext;
 
+    /**
+     * 第三种实现，基于InitializingBean接口，在spring注入完成后，将所有的验证类手动放入verifyHandlers中
+     * @throws Exception
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         Map<String, VerifyHandler> verifyHandlerMap = applicationContext.getBeansOfType(VerifyHandler.class);
@@ -34,6 +45,11 @@ public class VerifyHandlerChain implements InitializingBean {
         });
     }
 
+    /**
+     * 通过责任链路调用验证接口
+     * @param paramList
+     * @return
+     */
     public List<Object> verify(List<Object> paramList) {
         List<Object> objects = null;
         for (VerifyHandler verifyHandler : verifyHandlers) {

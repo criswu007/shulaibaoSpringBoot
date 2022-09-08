@@ -4,6 +4,7 @@ package com.example.mybatisplus.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.mybatisplus.entity.EajJzEntity;
+import com.example.mybatisplus.pojo.eo.ResultEO;
 
 /**
  * <p>
@@ -13,7 +14,7 @@ import com.example.mybatisplus.entity.EajJzEntity;
  * @author wudb
  * @since 2019-11-26
  */
-public interface IEajJzService extends IService<EajJzEntity> {
+public interface IEajJzService {
     void test(JSONObject jo, EajJzEntity eajJzEntity);
 
     void test1();
@@ -26,5 +27,6 @@ public interface IEajJzService extends IService<EajJzEntity> {
 
     void test5();
 
-    void test6();
+    ResultEO test6();
+    void test7();
 }

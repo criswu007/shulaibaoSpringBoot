@@ -18,4 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class EajDqxServiceImpl extends ServiceImpl<EajDqxMapper, EajDqxEntity> implements IEajDqxService {
 
+    public void test() {
+    }
 }

@@ -1,0 +1,107 @@
+1:C 15 Oct 2025 17:10:00.377 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 15 Oct 2025 17:10:00.380 * Redis version=8.0.4, bits=64, commit=00000000, modified=1, pid=1, just started
+1:C 15 Oct 2025 17:10:00.382 * Configuration loaded
+1:S 15 Oct 2025 17:10:00.382 * monotonic clock: POSIX clock_gettime
+1:S 15 Oct 2025 17:10:00.384 * Running mode=standalone, port=6381.
+1:S 15 Oct 2025 17:10:00.385 * <bf> RedisBloom version 8.0.1 (Git=unknown)
+1:S 15 Oct 2025 17:10:00.385 * <bf> Registering configuration options: [
+1:S 15 Oct 2025 17:10:00.386 * <bf> 	{ bf-error-rate       :      0.01 }
+1:S 15 Oct 2025 17:10:00.386 * <bf> 	{ bf-initial-size     :       100 }
+1:S 15 Oct 2025 17:10:00.386 * <bf> 	{ bf-expansion-factor :         2 }
+1:S 15 Oct 2025 17:10:00.387 * <bf> 	{ cf-bucket-size      :         2 }
+1:S 15 Oct 2025 17:10:00.388 * <bf> 	{ cf-initial-size     :      1024 }
+1:S 15 Oct 2025 17:10:00.388 * <bf> 	{ cf-max-iterations   :        20 }
+1:S 15 Oct 2025 17:10:00.388 * <bf> 	{ cf-expansion-factor :         1 }
+1:S 15 Oct 2025 17:10:00.389 * <bf> 	{ cf-max-expansions   :        32 }
+1:S 15 Oct 2025 17:10:00.389 * <bf> ]
+1:S 15 Oct 2025 17:10:00.390 * Module 'bf' loaded from /usr/local/lib/redis/modules//redisbloom.so
+1:S 15 Oct 2025 17:10:00.391 * <search> Redis version found by RedisSearch : 8.0.4 - oss
+1:S 15 Oct 2025 17:10:00.393 * <search> RediSearch version 8.0.1 (Git=5688fcc)
+1:S 15 Oct 2025 17:10:00.394 * <search> Low level api version 1 initialized successfully
+1:S 15 Oct 2025 17:10:00.394 * <search> gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000, 
+1:S 15 Oct 2025 17:10:00.395 * <search> Initialized thread pools!
+1:S 15 Oct 2025 17:10:00.395 * <search> Disabled workers threadpool of size 0
+1:S 15 Oct 2025 17:10:00.395 * <search> Subscribe to config changes
+1:S 15 Oct 2025 17:10:00.395 * <search> Enabled role change notification
+1:S 15 Oct 2025 17:10:00.396 * <search> Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms
+1:S 15 Oct 2025 17:10:00.396 * <search> Register write commands
+1:S 15 Oct 2025 17:10:00.397 * Module 'search' loaded from /usr/local/lib/redis/modules//redisearch.so
+1:S 15 Oct 2025 17:10:00.398 * <timeseries> RedisTimeSeries version 80001, git_sha=577bfa8b5909e7ee572f0b651399be8303dc6641
+1:S 15 Oct 2025 17:10:00.399 * <timeseries> Redis version found by RedisTimeSeries : 8.0.4 - oss
+1:S 15 Oct 2025 17:10:00.400 * <timeseries> Registering configuration options: [
+1:S 15 Oct 2025 17:10:00.400 * <timeseries> 	{ ts-compaction-policy   :              }
+1:S 15 Oct 2025 17:10:00.401 * <timeseries> 	{ ts-num-threads         :            3 }
+1:S 15 Oct 2025 17:10:00.402 * <timeseries> 	{ ts-retention-policy    :            0 }
+1:S 15 Oct 2025 17:10:00.402 * <timeseries> 	{ ts-duplicate-policy    :        block }
+1:S 15 Oct 2025 17:10:00.403 * <timeseries> 	{ ts-chunk-size-bytes    :         4096 }
+1:S 15 Oct 2025 17:10:00.403 * <timeseries> 	{ ts-encoding            :   compressed }
+1:S 15 Oct 2025 17:10:00.403 * <timeseries> 	{ ts-ignore-max-time-diff:            0 }
+1:S 15 Oct 2025 17:10:00.404 * <timeseries> 	{ ts-ignore-max-val-diff :     0.000000 }
+1:S 15 Oct 2025 17:10:00.404 * <timeseries> ]
+1:S 15 Oct 2025 17:10:00.404 * <timeseries> Detected redis oss
+1:S 15 Oct 2025 17:10:00.405 * Module 'timeseries' loaded from /usr/local/lib/redis/modules//redistimeseries.so
+1:S 15 Oct 2025 17:10:00.406 * <ReJSON> Created new data type 'ReJSON-RL'
+1:S 15 Oct 2025 17:10:00.407 * <ReJSON> version: 80001 git sha: unknown branch: unknown
+1:S 15 Oct 2025 17:10:00.407 * <ReJSON> Exported RedisJSON_V1 API
+1:S 15 Oct 2025 17:10:00.407 * <ReJSON> Exported RedisJSON_V2 API
+1:S 15 Oct 2025 17:10:00.408 * <ReJSON> Exported RedisJSON_V3 API
+1:S 15 Oct 2025 17:10:00.408 * <ReJSON> Exported RedisJSON_V4 API
+1:S 15 Oct 2025 17:10:00.408 * <ReJSON> Exported RedisJSON_V5 API
+1:S 15 Oct 2025 17:10:00.409 * <ReJSON> Enabled diskless replication
+1:S 15 Oct 2025 17:10:00.409 * <ReJSON> Initialized shared string cache, thread safe: false.
+1:S 15 Oct 2025 17:10:00.409 * Module 'ReJSON' loaded from /usr/local/lib/redis/modules//rejson.so
+1:S 15 Oct 2025 17:10:00.409 * <search> Acquired RedisJSON_V5 API
+1:S 15 Oct 2025 17:10:00.410 * Server initialized
+1:S 15 Oct 2025 17:10:00.411 * <search> Loading event starts
+1:S 15 Oct 2025 17:10:00.411 * <search> Enabled workers threadpool of size 4
+1:S 15 Oct 2025 17:10:00.412 * Reading RDB base file on AOF loading...
+1:S 15 Oct 2025 17:10:00.413 * Loading RDB produced by version 8.0.4
+1:S 15 Oct 2025 17:10:00.414 * RDB age 3911 seconds
+1:S 15 Oct 2025 17:10:00.414 * RDB memory usage when created 1.14 Mb
+1:S 15 Oct 2025 17:10:00.414 * RDB is base AOF
+1:S 15 Oct 2025 17:10:00.414 * Done loading RDB, keys loaded: 0, keys expired: 0.
+1:S 15 Oct 2025 17:10:00.416 * DB loaded from base file appendonly.aof.9.base.rdb: 0.004 seconds
+1:S 15 Oct 2025 17:10:00.416 * DB loaded from incr file appendonly.aof.9.incr.aof: 0.001 seconds
+1:S 15 Oct 2025 17:10:00.417 * <search> Disabled workers threadpool of size 4
+1:S 15 Oct 2025 17:10:00.417 * <search> Loading event ends
+1:S 15 Oct 2025 17:10:00.417 * DB loaded from append only file: 0.006 seconds
+1:S 15 Oct 2025 17:10:00.418 * Opening AOF incr file appendonly.aof.9.incr.aof on server start
+1:S 15 Oct 2025 17:10:00.419 * Ready to accept connections tcp
+1:S 15 Oct 2025 17:10:01.347 * Connecting to MASTER 172.16.207.55:6379
+1:S 15 Oct 2025 17:10:01.348 * MASTER <-> REPLICA sync started
+1:S 15 Oct 2025 17:10:01.349 * Non blocking connect for SYNC fired the event.
+1:S 15 Oct 2025 17:10:01.351 * Master replied to PING, replication can continue...
+1:S 15 Oct 2025 17:10:01.352 * Partial resynchronization not possible (no cached master)
+1:S 15 Oct 2025 17:10:01.359 * PSYNC is not possible, initialize RDB channel.
+1:S 15 Oct 2025 17:10:06.506 * Starting to receive RDB and replication stream in parallel.
+1:S 15 Oct 2025 17:10:06.508 * MASTER <-> REPLICA sync: receiving streamed RDB from master with EOF to disk
+1:S 15 Oct 2025 17:10:06.512 * MASTER <-> REPLICA sync: Loading DB in memory
+1:S 15 Oct 2025 17:10:06.515 * MASTER <-> REPLICA sync: Flushing old data
+1:S 15 Oct 2025 17:10:06.516 * <search> Loading event starts
+1:S 15 Oct 2025 17:10:06.517 * <search> Enabled workers threadpool of size 4
+1:S 15 Oct 2025 17:10:06.517 * Loading RDB produced by version 8.0.4
+1:S 15 Oct 2025 17:10:06.517 * RDB age 0 seconds
+1:S 15 Oct 2025 17:10:06.517 * RDB memory usage when created 1.18 Mb
+1:S 15 Oct 2025 17:10:06.518 * Done loading RDB, keys loaded: 3, keys expired: 0.
+1:S 15 Oct 2025 17:10:06.518 * <search> Disabled workers threadpool of size 4
+1:S 15 Oct 2025 17:10:06.518 * <search> Loading event ends
+1:S 15 Oct 2025 17:10:06.519 * MASTER <-> REPLICA sync: Finished with success
+1:S 15 Oct 2025 17:10:06.520 * MASTER <-> REPLICA sync: Starting AOF after a successful sync
+1:S 15 Oct 2025 17:10:06.523 * Creating AOF incr file temp-appendonly.aof.incr on background rewrite
+1:S 15 Oct 2025 17:10:06.525 * Background append only file rewriting started by pid 48
+1:S 15 Oct 2025 17:10:06.526 * MASTER <-> REPLICA sync: Starting to stream replication buffer into the db (0 bytes).
+48:C 15 Oct 2025 17:10:06.527 * Successfully created the temporary AOF base file temp-rewriteaof-bg-48.aof
+1:S 15 Oct 2025 17:10:06.527 * MASTER <-> REPLICA sync: Successfully streamed replication buffer into the db (0 bytes in total)
+48:C 15 Oct 2025 17:10:06.528 * Fork CoW for AOF rewrite: current 0 MB, peak 0 MB, average 0 MB
+1:S 15 Oct 2025 17:10:06.590 * Background AOF rewrite terminated with success
+1:S 15 Oct 2025 17:10:06.590 * Successfully renamed the temporary AOF base file temp-rewriteaof-bg-48.aof into appendonly.aof.10.base.rdb
+1:S 15 Oct 2025 17:10:06.591 * Successfully renamed the temporary AOF incr file temp-appendonly.aof.incr into appendonly.aof.10.incr.aof
+1:S 15 Oct 2025 17:10:06.593 * Removing the history file appendonly.aof.9.incr.aof in the background
+1:S 15 Oct 2025 17:10:06.593 * Removing the history file appendonly.aof.9.base.rdb in the background
+1:S 15 Oct 2025 17:10:06.596 * Background AOF rewrite finished successfully
+1:signal-handler (1760519603) Received SIGTERM scheduling shutdown...
+1:S 15 Oct 2025 17:13:23.837 * User requested shutdown...
+1:S 15 Oct 2025 17:13:23.837 * Calling fsync() on the AOF file.
+1:S 15 Oct 2025 17:13:23.837 * Saving the final RDB snapshot before exiting.
+1:S 15 Oct 2025 17:13:23.838 * DB saved on disk
+1:S 15 Oct 2025 17:13:23.839 # Redis is now ready to exit, bye bye...

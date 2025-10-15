@@ -1,0 +1,79 @@
+version: "3"
+services:
+  redis-master:
+    image: redis:8.0
+    container_name: redis-master
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./redis-master/data:/data
+      - ./redis-master/logs:/logs
+      - ./redis-master/conf:/usr/local/etc/redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+
+  redis-replica1:
+    image: redis:8.0
+    container_name: redis-replica1
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./redis-replica1/data:/data
+      - ./redis-replica1/logs:/logs
+      - ./redis-replica1/conf:/usr/local/etc/redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6380:6380"
+
+  redis-replica2:
+    image: redis:8.0
+    container_name: redis-replica2
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./redis-replica2/data:/data
+      - ./redis-replica2/logs:/logs
+      - ./redis-replica2/conf:/usr/local/etc/redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6381:6381"
+
+  sentinel1:
+    image: redis:8.0
+    container_name: sentinel1
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./sentinel1/data:/data
+      - ./sentinel1/logs:/logs
+      - ./sentinel1/conf:/usr/local/etc/redis
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
+    ports:
+      - "26379:26379"
+
+  sentinel2:
+    image: redis:8.0
+    container_name: sentinel2
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./sentinel2/data:/data
+      - ./sentinel2/logs:/logs
+      - ./sentinel2/conf:/usr/local/etc/redis
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
+    ports:
+      - "26380:26380"
+
+  sentinel3:
+    image: redis:8.0
+    container_name: sentinel3
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./sentinel3/data:/data
+      - ./sentinel3/logs:/logs
+      - ./sentinel3/conf:/usr/local/etc/redis
+    command: ["redis-sentinel", "/usr/local/etc/redis/sentinel.conf"]
+    ports:
+      - "26381:26381"

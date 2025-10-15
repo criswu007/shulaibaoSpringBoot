@@ -1,0 +1,19 @@
+1:X 15 Oct 2025 17:10:00.389 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:X 15 Oct 2025 17:10:00.389 * Redis version=8.0.4, bits=64, commit=00000000, modified=1, pid=1, just started
+1:X 15 Oct 2025 17:10:00.390 * Configuration loaded
+1:X 15 Oct 2025 17:10:00.391 * monotonic clock: POSIX clock_gettime
+1:X 15 Oct 2025 17:10:00.393 * Running mode=sentinel, port=26379.
+1:X 15 Oct 2025 17:10:00.395 * Sentinel new configuration saved on disk
+1:X 15 Oct 2025 17:10:00.395 * Sentinel ID is 2e461ebbf80310baeb8eac73d7c04bce8f38e0b5
+1:X 15 Oct 2025 17:10:00.396 # +monitor master mymaster 172.16.207.55 6379 quorum 2
+1:X 15 Oct 2025 17:10:01.412 * +slave slave 172.18.0.1:6380 172.18.0.1 6380 @ mymaster 172.16.207.55 6379
+1:X 15 Oct 2025 17:10:01.415 * Sentinel new configuration saved on disk
+1:X 15 Oct 2025 17:10:01.415 * +slave slave 172.18.0.1:6381 172.18.0.1 6381 @ mymaster 172.16.207.55 6379
+1:X 15 Oct 2025 17:10:01.416 * Sentinel new configuration saved on disk
+1:X 15 Oct 2025 17:10:02.314 * +sentinel sentinel 0be6cc2da56ffbb718a862007dcc940f3c11649f 172.18.0.2 26379 @ mymaster 172.16.207.55 6379
+1:X 15 Oct 2025 17:10:02.318 * Sentinel new configuration saved on disk
+1:X 15 Oct 2025 17:10:02.381 * +sentinel sentinel bec3d1e93a5692fc8534d7072950803e79b443c2 172.18.0.4 26379 @ mymaster 172.16.207.55 6379
+1:X 15 Oct 2025 17:10:02.394 * Sentinel new configuration saved on disk
+1:signal-handler (1760519603) Received SIGTERM scheduling shutdown...
+1:X 15 Oct 2025 17:13:23.803 * User requested shutdown...
+1:X 15 Oct 2025 17:13:23.804 # Sentinel is now ready to exit, bye bye...

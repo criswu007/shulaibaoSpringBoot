@@ -1,6 +1,5 @@
 package com.example.mybatisplus.jvm.concurrent;
 
-import com.example.mybatisplus.utils.ConcurrentUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -13,7 +12,7 @@ public class ProducerConsumer {
     /**
      * 协调多个线程对全局变量的访问，公平锁
      */
-    private ReentrantLock lock = new ReentrantLock(true);
+    private ReentrantLock lock = new ReentrantLock(false);
 
     /**
      * 存放阻塞线程
@@ -29,11 +28,11 @@ public class ProducerConsumer {
 
     private static final int MAX_COUNT = 10;
 
-    public void task() {
+    public void take() {
         lock.lock();
         try {
-            if (count.intValue() < 1) {
-                log.info("当前数量小于1，不拿，消费线程进入阻塞队列");
+            if (count.intValue() == 0) {
+                log.info("当前数量为0，不拿，消费线程进入阻塞队列");
                 take.await();
             }
             // do something
@@ -83,44 +82,18 @@ public class ProducerConsumer {
     public static void main(String[] args) {
         ProducerConsumer producerConsumer = new ProducerConsumer();
         for (int i=0; i<2; i++) {
-            ConcurrentUtils.getInstance().submitRunTask(
-                new Consumer(producerConsumer)
-            );
+            new Thread(() -> {
+                while (true) {
+                    producerConsumer.take();
+                }
+            }, "take" + i).start();
         }
         for (int i=0; i<2; i++) {
-            ConcurrentUtils.getInstance().submitRunTask(
-                    new Producer(producerConsumer)
-            );
-        }
-    }
-}
-
-class Producer implements Runnable {
-    private ProducerConsumer producerConsumer;
-
-    public Producer (ProducerConsumer producerConsumer) {
-        this.producerConsumer = producerConsumer;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            producerConsumer.push();
-        }
-    }
-}
-
-class Consumer implements Runnable {
-    private ProducerConsumer producerConsumer;
-
-    public Consumer (ProducerConsumer producerConsumer) {
-        this.producerConsumer = producerConsumer;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            producerConsumer.task();
+            new Thread(() -> {
+                while (true) {
+                    producerConsumer.push();
+                }
+            }, "push" + i).start();
         }
     }
 }
